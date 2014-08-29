@@ -1,6 +1,6 @@
 # software-foundations
 
-Answers to the [software foundations][] textbook by Benjamin C. Pierce et al.
+Answers to the [Software Foundations][] course book by Benjamin C. Pierce et al.
 
 ## Progress
 
@@ -47,5 +47,5 @@ Answers to the [software foundations][] textbook by Benjamin C. Pierce et al.
 
 See [LICENSE][].
 
-[software foundations]: http://www.cis.upenn.edu/~bcpierce/sf/current/
+[Software Foundations]: http://www.cis.upenn.edu/~bcpierce/sf/current/
 [LICENSE]: ./LICENSE
