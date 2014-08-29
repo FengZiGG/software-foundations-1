@@ -6,7 +6,7 @@ Answers to the [software foundations][] textbook by Benjamin C. Pierce et al.
 
 - [x] Preface
 - [x] Basics
-- [ ] Induction
+- [x] Induction
 - [ ] Lists
 - [ ] Poly
 - [ ] MoreCoq

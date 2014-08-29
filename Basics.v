@@ -942,11 +942,11 @@ Fixpoint bin_succ (b : bin) : bin :=
     | STwice x => Twice (bin_succ x)
   end.
 
-Fixpoint bin_conv (b : bin) : nat :=
+Fixpoint bin_nat (b : bin) : nat :=
   match b with
     | Z         => 0
-    | Twice b'  => 2 * bin_conv b'
-    | STwice b' => 1 + 2 * bin_conv b'
+    | Twice b'  => 2 * bin_nat b'
+    | STwice b' => 1 + 2 * bin_nat b'
   end.
 
 
@@ -967,15 +967,15 @@ Proof. reflexivity. Qed.
 Example bin_succ_4 : bin_succ b_four = b_five.
 Proof. reflexivity. Qed.
 
-Example bin_conv_0 : bin_conv Z = 0.
+Example bin_nat_0 : bin_nat Z = 0.
 Proof. reflexivity. Qed.
-Example bin_conv_1 : bin_conv b_one = 1.
+Example bin_nat_1 : bin_nat b_one = 1.
 Proof. reflexivity. Qed.
-Example bin_conv_2 : bin_conv b_two = 2.
+Example bin_nat_2 : bin_nat b_two = 2.
 Proof. reflexivity. Qed.
-Example bin_conv_3 : bin_conv b_three = 3.
+Example bin_nat_3 : bin_nat b_three = 3.
 Proof. reflexivity. Qed.
-Example bin_conv_4 : bin_conv b_four = 4.
+Example bin_nat_4 : bin_nat b_four = 4.
 Proof. reflexivity. Qed.
 
 (** [] *)
