@@ -4,8 +4,8 @@ Answers to the [software foundations][] textbook by Benjamin C. Pierce et al.
 
 ## Progress
 
-- [ ] Preface
-- [ ] Basics
+- [x] Preface
+- [x] Basics
 - [ ] Induction
 - [ ] Lists
 - [ ] Poly
