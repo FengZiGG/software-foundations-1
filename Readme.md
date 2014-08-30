@@ -8,7 +8,7 @@ Answers to the [Software Foundations][] course book by Benjamin C. Pierce et al.
 - [x] Basics
 - [x] Induction
 - [x] Lists
-- [ ] Poly
+- [x] Poly
 - [ ] MoreCoq
 - [ ] Logic
 - [ ] Rel
