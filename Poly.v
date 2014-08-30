@@ -1,13 +1,13 @@
 (** * Poly: Polymorphism and Higher-Order Functions *)
 
-(** In this chapter we continue our development of basic 
+(** In this chapter we continue our development of basic
     concepts of functional programming.  The critical new ideas are
     _polymorphism_ (abstracting functions over the types of the data
     they manipulate) and _higher-order functions_ (treating functions
     as data).
 *)
 
-Require Export Lists.   
+Require Export Lists.
 
 (* ###################################################### *)
 (** * Polymorphism *)
@@ -89,8 +89,8 @@ Check (cons nat 2 (cons nat 1 (nil nat))).
 
 Fixpoint length (X:Type) (l:list X) : nat :=
   match l with
-  | nil      => 0
-  | cons h t => S (length X t)
+  | nil _      => 0
+  | cons _ h t => S (length X t)
   end.
 
 (** Note that the uses of [nil] and [cons] in [match] patterns
@@ -122,20 +122,20 @@ Proof. reflexivity.  Qed.
 Fixpoint app (X : Type) (l1 l2 : list X)
                 : (list X) :=
   match l1 with
-  | nil      => l2
-  | cons h t => cons X h (app X t l2)
+  | nil _      => l2
+  | cons _ h t => cons X h (app X t l2)
   end.
 
 Fixpoint snoc (X:Type) (l:list X) (v:X) : (list X) :=
   match l with
-  | nil      => cons X v (nil X)
-  | cons h t => cons X h (snoc X t v)
+  | nil _      => cons X v (nil X)
+  | cons _ h t => cons X h (snoc X t v)
   end.
 
 Fixpoint rev (X:Type) (l:list X) : list X :=
   match l with
-  | nil      => nil X
-  | cons h t => snoc X (rev X t) h
+  | nil _      => nil X
+  | cons _ h t => snoc X (rev X t) h
   end.
 
 
@@ -169,7 +169,7 @@ Inductive grumble (X:Type) : Type :=
       - [e bool true]
       - [e mumble (b c 0)]
       - [e bool (b c 0)]
-      - [c] 
+      - [c]
 (* FILL IN HERE *)
 [] *)
 
@@ -181,7 +181,7 @@ Inductive baz : Type :=
    | x : baz -> baz
    | y : baz -> bool -> baz.
 
-(** How _many_ elements does the type [baz] have? 
+(** How _many_ elements does the type [baz] have?
 (* FILL IN HERE *)
 [] *)
 
@@ -196,8 +196,8 @@ End MumbleBaz.
 
 Fixpoint app' X l1 l2 : list X :=
   match l1 with
-  | nil      => l2
-  | cons h t => cons X h (app' X t l2)
+  | nil _      => l2
+  | cons _ h t => cons X h (app' X t l2)
   end.
 
 (** Indeed it will.  Let's see what type Coq has assigned to [app']: *)
@@ -260,8 +260,8 @@ Check app.
 
 Fixpoint length' (X:Type) (l:list X) : nat :=
   match l with
-  | nil      => 0
-  | cons h t => S (length' _ t)
+  | nil _      => 0
+  | cons _ h t => S (length' _ t)
   end.
 
 (** In this instance, we don't save much by writing [_] instead of
@@ -284,14 +284,14 @@ Definition list123' := cons _ 1 (cons _ 2 (cons _ 3 (nil _))).
     type argument(s) of a given function. The [Arguments] directive
     specifies the name of the function or constructor, and then lists
     its argument names, with curly braces around any arguments to be
-    treated as implicit. 
+    treated as implicit.
     *)
 
 Arguments nil {X}.
 Arguments cons {X} _ _.  (* use underscore for argument position that has no name *)
 Arguments length {X} l.
 Arguments app {X} l1 l2.
-Arguments rev {X} l. 
+Arguments rev {X} l.
 Arguments snoc {X} l v.
 
 (* note: no _ arguments required... *)
@@ -501,8 +501,8 @@ Inductive option (X:Type) : Type :=
   | Some : X -> option X
   | None : option X.
 
-Arguments Some {X} _. 
-Arguments None {X}. 
+Arguments Some {X} _.
+Arguments None {X}.
 
 (** *** *)
 (** We can now rewrite the [index] function so that it works
@@ -999,9 +999,9 @@ Theorem unfold_example_bad : forall m n,
   plus3 n + 1 = m + 1.
 Proof.
   intros m n H.
-(* At this point, we'd like to do [rewrite -> H], since 
-     [plus3 n] is definitionally equal to [3 + n].  However, 
-     Coq doesn't automatically expand [plus3 n] to its 
+(* At this point, we'd like to do [rewrite -> H], since
+     [plus3 n] is definitionally equal to [3 + n].  However,
+     Coq doesn't automatically expand [plus3 n] to its
      definition. *)
   Abort.
 
@@ -1062,7 +1062,7 @@ Proof. reflexivity. Qed.
 
 Theorem fold_length_correct : forall X (l : list X),
   fold_length l = length l.
-(* FILL IN HERE *) Admitted. 
+(* FILL IN HERE *) Admitted.
 (** [] *)
 
 (** **** Exercise: 3 stars (fold_map) *)
@@ -1079,4 +1079,3 @@ Definition fold_map {X Y:Type} (f : X -> Y) (l : list X) : list Y :=
 (** [] *)
 
 (* $Date: 2013-09-26 14:40:26 -0400 (Thu, 26 Sep 2013) $ *)
-
