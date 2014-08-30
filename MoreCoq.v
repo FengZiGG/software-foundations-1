@@ -20,10 +20,10 @@ Theorem silly1 : forall (n m o p : nat),
 Proof.
   intros n m o p eq1 eq2.
   rewrite <- eq1.
-  (* At this point, we could finish with 
-     "[rewrite -> eq2. reflexivity.]" as we have 
+  (* At this point, we could finish with
+     "[rewrite -> eq2. reflexivity.]" as we have
      done several times above. But we can achieve the
-     same effect in a single step by using the 
+     same effect in a single step by using the
      [apply] tactic instead: *)
   apply eq2.  Qed.
 
@@ -1065,6 +1065,3 @@ Proof.
 (** [] *)
 
 (* $Date: 2014-02-04 07:15:43 -0500 (Tue, 04 Feb 2014) $ *)
-
-
-
