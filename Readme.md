@@ -11,7 +11,7 @@ Answers to the [Software Foundations][] course book by Benjamin C. Pierce et al.
 - [x] Poly
 - [x] MoreCoq
 - [x] Logic
-- [ ] Rel
+- [x] Rel
 - [ ] Prop
 - [ ] MoreLogic
 - [ ] ProofObjects
