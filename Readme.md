@@ -12,7 +12,7 @@ Answers to the [Software Foundations][] course book by Benjamin C. Pierce et al.
 - [x] MoreCoq
 - [x] Logic
 - [x] Rel
-- [ ] Prop
+- [ ] Prop *incomplete*
 - [ ] MoreLogic
 - [ ] ProofObjects
 - [ ] MoreInd
