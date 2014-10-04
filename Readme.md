@@ -13,7 +13,7 @@ Answers to the [Software Foundations][] course book by Benjamin C. Pierce et al.
 - [x] Logic
 - [x] Rel
 - [ ] Propositions *incomplete*
-- [ ] MoreLogic
+- [ ] MoreLogic *incomplete*
 - [ ] ProofObjects
 - [ ] MoreInd
 - [ ] SfLib

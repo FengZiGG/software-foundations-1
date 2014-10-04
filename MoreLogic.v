@@ -99,7 +99,7 @@ Qed.
 ]]
     mean? *)
 
-(* FILL IN HERE *)
+(* There is exists some Nat with a [beautiful] successor. *)
 
 (*
 *)
@@ -110,7 +110,10 @@ Qed.
 Theorem dist_not_exists : forall (X:Type) (P : X -> Prop),
   (forall x, P x) -> ~ (exists x, ~ P x).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros. unfold not. intros. inversion H0.
+    apply H1. apply H.
+Qed.
+
 (** [] *)
 
 (** **** Exercise: 3 stars, optional (not_exists_dist) *)
@@ -122,7 +125,22 @@ Theorem not_exists_dist :
   forall (X:Type) (P : X -> Prop),
     ~ (exists x, ~ P x) -> (forall x, P x).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  unfold excluded_middle. intros ex_mid. intros.
+  unfold not in H. unfold not in ex_mid.
+
+  assert (M : P x \/ ~ P x).
+    Case "Proof of assertion".
+    apply ex_mid.
+
+  Case "Assertion application".
+  unfold not in M.
+  inversion M.
+    apply H0.
+    destruct H.
+      exists x.
+      apply H0.
+Qed.
+
 (** [] *)
 
 (** **** Exercise: 2 stars (dist_exists_or) *)
@@ -132,7 +150,16 @@ Proof.
 Theorem dist_exists_or : forall (X:Type) (P Q : X -> Prop),
   (exists x, P x \/ Q x) <-> (exists x, P x) \/ (exists x, Q x).
 Proof.
-   (* FILL IN HERE *) Admitted.
+  intros. split. intros. inversion H. inversion H0.
+  Case "L".
+    left. exists witness. apply H1.
+    right. exists witness. apply H1.
+  Case "R".
+   intros. inversion H.
+     inversion H0. exists witness. left. apply H1.
+     inversion H0. exists witness. right. apply H1.
+Qed.
+
 (** [] *)
 
 (* ###################################################### *)
@@ -238,7 +265,12 @@ Proof.
 Theorem override_shadow' : forall (X:Type) x1 x2 k1 k2 (f : nat->X),
   (override' (override' f k1 x2) k1 x1) k2 = (override' f k1 x1) k2.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros.
+  unfold override'.
+  destruct (eq_nat_dec k1 k2).
+    reflexivity.
+    reflexivity.
+Qed.
 (** [] *)
 
 
@@ -254,9 +286,9 @@ Proof.
     type [X] and a property [P : X -> Prop], such that [all X P l]
     asserts that [P] is true for every element of the list [l]. *)
 
-Inductive all (X : Type) (P : X -> Prop) : list X -> Prop :=
-  (* FILL IN HERE *)
-.
+Inductive all {X : Type} (P : X -> Prop) : list X -> Prop :=
+  | a_nil : all P []
+  | a_cons h t : P h -> all P t -> all P (h :: t).
 
 (** Recall the function [forallb], from the exercise
     [forall_exists_challenge] in chapter [Poly]: *)
@@ -274,7 +306,26 @@ Fixpoint forallb {X : Type} (test : X -> bool) (l : list X) : bool :=
     Are there any important properties of the function [forallb] which
     are not captured by your specification? *)
 
-(* FILL IN HERE *)
+Theorem forallb_spec :
+  forall X (test : X -> bool) (l : list X),
+    forallb test l = true <-> all (fun x => test x = true) l.
+Proof.
+  intros. split. intros. induction l as [|h t].
+    Case "1".
+      apply a_nil.
+    Case "2".
+      apply a_cons.
+      simpl in H.
+      destruct (test h). reflexivity. apply H.
+      apply IHt. simpl in H.
+      destruct (test h). apply H. inversion H.
+   Case "3".
+    intros.
+    induction H.
+      reflexivity.
+      simpl. rewrite H. simpl. apply IHall.
+Qed.
+
 (** [] *)
 
 (** **** Exercise: 4 stars, advanced (filter_challenge) *)
@@ -302,7 +353,20 @@ Fixpoint forallb {X : Type} (test : X -> bool) (l : list X) : bool :=
     for one list to be a merge of two others.  Do this with an
     inductive relation, not a [Fixpoint].)  *)
 
-(* FILL IN HERE *)
+Inductive in_order_merge {X : Type} : list X -> list X -> list X -> Prop :=
+  | iom_nil : in_order_merge [] [] []
+  | iom_l   : forall (h : X) (xs ys zs : list X),
+                in_order_merge (h :: xs) ys (h :: zs)
+  | iom_r   : forall (h : X) (xs ys zs : list X),
+                in_order_merge xs (h :: ys) (h :: zs).
+
+Theorem filter_challenge : forall X (p : X -> bool) (l lt lf : list X),
+                             in_order_merge l lt lf ->
+                             forallb p lt = true ->
+                             forallb (fun x => negb (p x)) lf = true ->
+                             filter p l = lt.
+Proof. Admitted.
+
 (** [] *)
 
 (** **** Exercise: 5 stars, advanced, optional (filter_challenge_2) *)
